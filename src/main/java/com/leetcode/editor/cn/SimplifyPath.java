@@ -1,5 +1,10 @@
 package com.leetcode.editor.cn;
 
+import java.util.Arrays;
+import java.util.Stack;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
+
 /**
  * <p>给你一个字符串 <code>path</code> ，表示指向某一文件或目录的 Unix 风格 <strong>绝对路径 </strong>（以 <code>'/'</code>
  * 开头），请你将其转化为更加简洁的规范路径。</p>
@@ -66,6 +71,7 @@ public class SimplifyPath {
 
   public static void main(String[] args) {
     Solution solution = new SimplifyPath().new Solution();
+    System.out.println(solution.simplifyPath("///"));
   }
 
   //leetcode submit region begin(Prohibit modification and deletion)
@@ -73,11 +79,35 @@ public class SimplifyPath {
 
     public String simplifyPath(String path) {
 
+      Stack<String> stack = new Stack<>();
 
+      path = path.replaceAll("/+", "/");
+      if (path.length() == 1) {
+        return "/";
+      }
+      path = path.endsWith("/") ? path.substring(1, path.length() - 1) : path.substring(1);
 
-      return "";
+      String[] paths = path.split("/");
+
+      for (String p : paths) {
+
+        if (p.equals(".")) {
+          continue;
+        }
+
+        if (p.equals("..")) {
+          if (!stack.empty()) {
+            stack.pop();
+          }
+          continue;
+        }
+
+        stack.push(p);
+      }
+
+      return "/" + String.join("/", stack);
     }
   }
-//leetcode submit region end(Prohibit modification and deletion)
+  //leetcode submit region end(Prohibit modification and deletion)
 
 }
