@@ -1,5 +1,7 @@
 package com.leetcode.editor.cn;
 
+import java.util.Stack;
+
 /**
  * <p>如果字符串满足以下条件之一，则可以称之为 <strong>有效括号字符串</strong><strong>（valid parentheses string</strong>，可以简写为
  * <strong>VPS</strong>）：</p>
@@ -69,6 +71,7 @@ public class MaximumNestingDepthOfTheParentheses {
 
   public static void main(String[] args) {
     Solution solution = new MaximumNestingDepthOfTheParentheses().new Solution();
+    System.out.println(solution.maxDepth("()(()())"));
   }
 
   //leetcode submit region begin(Prohibit modification and deletion)
@@ -76,7 +79,32 @@ public class MaximumNestingDepthOfTheParentheses {
 
     public int maxDepth(String s) {
 
-      return 0;
+      int maxDepth = 0, currentDepth = 0;
+
+      Stack<Character> stack = new Stack<>();
+
+      for (char c : s.toCharArray()) {
+
+        if (c != '(' && c != ')') {
+          continue;
+        }
+
+        // (1+(2*3)+((8)/4))+1 => 3
+        if (c == '(') {
+          stack.push(c);
+        }
+
+        if (c == ')') {
+          stack.pop();
+        }
+
+        currentDepth = stack.size();
+        if (currentDepth >= maxDepth) {
+          maxDepth = currentDepth;
+        }
+      }
+
+      return maxDepth;
     }
   }
 //leetcode submit region end(Prohibit modification and deletion)

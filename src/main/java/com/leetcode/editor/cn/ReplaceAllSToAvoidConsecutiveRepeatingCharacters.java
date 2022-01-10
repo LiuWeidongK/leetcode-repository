@@ -57,6 +57,7 @@ import java.util.Map;
 public class ReplaceAllSToAvoidConsecutiveRepeatingCharacters {
 
   public static void main(String[] args) {
+
     Solution solution = new ReplaceAllSToAvoidConsecutiveRepeatingCharacters().new Solution();
     System.out.println(solution.modifyString("?"));
   }

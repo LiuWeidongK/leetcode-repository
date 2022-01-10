@@ -1,5 +1,8 @@
 package com.leetcode.editor.cn;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <p>LeetCode 设计了一款新式键盘，正在测试其可用性。测试人员将会点击一系列键（总计 <code>n</code> 个），每次一个。</p>
  *
@@ -63,6 +66,7 @@ public class SlowestKey {
 
   public static void main(String[] args) {
     Solution solution = new SlowestKey().new Solution();
+    System.out.println(solution.slowestKey(new int[]{1, 2}, "ba"));
   }
 
   //leetcode submit region begin(Prohibit modification and deletion)
@@ -70,7 +74,27 @@ public class SlowestKey {
 
     public char slowestKey(int[] releaseTimes, String keysPressed) {
 
-      return 'a';
+      int maxReleaseTime = 0;
+      char slowestKey = keysPressed.charAt(0);
+
+      for (int i = 0; i < releaseTimes.length; i++) {
+
+        char key = keysPressed.charAt(i);
+        int releaseTime = i == 0 ? releaseTimes[i] : releaseTimes[i] - releaseTimes[i - 1];
+
+        if (releaseTime >= maxReleaseTime) {
+          if (releaseTime == maxReleaseTime) {
+            if (key > slowestKey) {
+              slowestKey = key;
+            }
+            continue;
+          }
+          maxReleaseTime = releaseTime;
+          slowestKey = key;
+        }
+      }
+
+      return slowestKey;
     }
   }
 //leetcode submit region end(Prohibit modification and deletion)
